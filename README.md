@@ -12,9 +12,9 @@ Le programme parcourt chaque électeur, identifie son vote et l'attribue au cand
 
 - Une fonction permettant d'enregistrer les candidats (Un candidat ne peut être enregistré qu'une seule fois)
 - Une fonction permettant d'enregistrer les électeurs (Un électeur ne peut être enregistré qu'une seule fois)
-- Une fonction qui évalue les candidatures et affiche la liste des candidatures acceptées
-- Une fonction qui affiche la liste des candidatures rejetées
-- Une fonction permettant de dire pour un candidat s'il a voté ou pas
+- Une fonction qui évalue la validité de chaque candidature 
+- Une fonction qui affiche la liste des candidatures acceptées et celles rejettées
+- Une fonction permettant de dire pour un électeur s'il a voté ou pas
 - Une fonction qui comptabilise les votes pour chaque candidat
 - Une fonction qui range les candidats par ordre croissant de nombre de votes
 - Une fonction qui affiche les candidats dont la caution doit être remboursée
