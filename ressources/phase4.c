@@ -15,11 +15,12 @@ void remplirliste_candidats(){
 }
 
 void afficherliste_candidats(){
+    void pourcentage();
     int i;
     printf("\nTableau des résultats :\n");
-    printf("ID\tNom\t\tParti\tVoix\n");
-    for (int i = 0; i < nb_candidat; i++) {
-        printf("%d\t%-10s\t%-5s\t%.0f\n", candidats[i].id, candidats[i].nom, candidats[i].age, candidats[i].parti, candidats[i].nb_votes);
+    printf("ID\tNom\t\tParti\tVoix\tPourcentage\n");
+    for (int i = 0; i < nb_candidats; i++) {
+        printf("%d\t%-10s\t%-5s\t%.0f\t%.2f%%\n", candidats[i].id, candidats[i].nom, candidats[i].age, candidats[i].parti, candidats[i].nb_votes, candidats[i].pourcentage);
     }
  
 }
@@ -52,11 +53,6 @@ void pourcentage(){
     for(i = 0; i < liste_candidat; i++){
         liste_candidats[i].pourcentage = (liste_candidats[i].voix*100.0)/pourecntage;
     }
-    printf("\nTableau des pourcentages :\n");
-    printf("ID\tNom\t\tParti\tPourcentage\n");
-    for (int i = 0; i < nbrcandidat; i++) {
-        printf("%d\t%-10s\t%-5s\t%.2f%%\n", candidats[i].id, candidats[i].nom, candidats[i].age, candidats[i].parti, liste_candidats[i].pourcentage);
-    }
 }
 
 void caution(){
@@ -69,5 +65,6 @@ void caution(){
     }
 
 }
+
 
 
