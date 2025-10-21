@@ -1,5 +1,72 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "ressources.h"
 
+float liste_candidats[10];
+int liste_electeurs, nb_candidat = 10, nb_votants;
+void remplirliste_candidats(){
+    int i;
+    printf("\nEntrer les valeurs du tableaux: \n");
+    for(i = 0; i < 10; i++){
+        printf("liste_candidats[%d] = ", i + 1);
+        scanf("%f", &liste_candidats[i]);
+    }
+}
+
+void afficherliste_candidats(){
+    int i;
+    printf("\nTableau des voix :\n");
+    printf("ID\tNom\t\tParti\tVoix\n");
+    for (int i = 0; i < nb_candidat; i++) {
+        printf("%d\t%-10s\t%-5s\t%.0f\n", candidats[i].id, candidats[i].nom, candidats[i].age, candidats[i].parti, candidats[i].nb_votes);
+    }
+ 
+}
+
+void trierCroissant(){
+    int i, j;
+    float Tmp;
+    for(i = 0; i < 10; i++){
+        for(j = i + 1; j < 10; j++){
+            if(T[i] > T[j]){
+                Tmp = T[i];
+                T[i] = T[j];
+                T[j] = Tmp;}
+        }
+    }
+
+    printf("\n les canditats par ordre croissant de vote sont :\n");
+    afficherliste_candidats();
+}
+
+void pourcentage(){
+
+    int i;
+    float pourcentage;
+
+    for(i = 0; i < 10; i++){
+        pourcentage += liste_candidat[i].voix;
+    }
+    nb_votants = (int)pourcentage;
+    for(i = 0; i < liste_candidat; i++){
+        liste_candidats[i].pourcentage = (liste_candidats[i].voix*100.0)/pourecntage;
+    }
+    printf("\nTableau des pourcentages :\n");
+    printf("ID\tNom\t\tParti\tPourcentage\n");
+    for (int i = 0; i < nbrcandidat; i++) {
+        printf("%d\t%-10s\t%-5s\t%.2f%%\n", candidats[i].id, candidats[i].nom, candidats[i].age, candidats[i].parti, liste_candidats[i].pourcentage);
+    }
+}
+
+void caution(){
+    printf("\n Voici les candidants dont la caution sera  rembourséé \n");
+    int i;
+    for(i = 0; i < liste_candidats; i++){
+        if(liste_candidats[i].pourcentage >= 12.0){
+            printf("- %s (%.2f%%)\n", candidats[i].nom, liste_candidats[i].pourcentage);
+        }
+    }
+
+}
