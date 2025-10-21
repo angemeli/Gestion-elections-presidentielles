@@ -19,7 +19,8 @@ Le programme parcourt chaque électeur, identifie son vote et l'attribue au cand
 - Une fonction qui affiche la liste des candidatures acceptées et celles rejettées
 
 **Phase 3 : Vote et comptabilisation**
-- Une fonction permettant de dire pour un électeur s'il a voté ou pas
+- Une fonction qui permet d'effectuer les votes
+- Une fonction qui affiche pour un candidat s'il a voté ou pas
 - Une fonction qui comptabilise les votes pour chaque candidat
 
 **Phase 4 : Affichage des résultats**

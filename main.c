@@ -72,11 +72,11 @@ int main(int argc, char const *argv[]) {
             switch (choice) {
             case 1 :
                 system("cls");
-                // Fonction 1 de la phase 2
+                void verifierCandidatures();
                 break;
             case 2 :
                 system("cls");
-                // Fonction 2 de la phase 2
+                void afficherResultats();
                 break;
             case 3 :
                 char entry;
@@ -159,11 +159,11 @@ int main(int argc, char const *argv[]) {
             switch (choice) {
             case 1 :
                 system("cls");
-                // Fonction 1 de la phase 4
+                trierCroissant();
                 break;
             case 2 :
                 system("cls");
-                // Fonction 2 de la phase 4
+                caution();
                 break;
             case 0 :
                 printf("\nMerci et a la prochaine !\n");

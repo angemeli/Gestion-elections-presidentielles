@@ -19,18 +19,20 @@ typedef struct{
 } Electeur;
 
 // Variables globales
-int nb_candidates = 0;
-Candidat liste_candidats[15];
-Candidat liste_candidats_valides[15];
+int nb_candidats = 0;
+int nb_electeurs = 0;
+Candidat liste_candidats[100];
 Electeur liste_electeurs[500];
 
 // Fonctions de la phase 1
+void load_data();
 void enregCandidat();
 void enregElecteur();
 
 // Fonctions de la phase 2
 
 // Fonctions de la phase 3
+void vote();
 void count_votes();
 
 // Fonctions de la phase 4
