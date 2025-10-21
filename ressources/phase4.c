@@ -16,7 +16,7 @@ void remplirliste_candidats(){
 
 void afficherliste_candidats(){
     int i;
-    printf("\nTableau des voix :\n");
+    printf("\nTableau des résultats :\n");
     printf("ID\tNom\t\tParti\tVoix\n");
     for (int i = 0; i < nb_candidat; i++) {
         printf("%d\t%-10s\t%-5s\t%.0f\n", candidats[i].id, candidats[i].nom, candidats[i].age, candidats[i].parti, candidats[i].nb_votes);
@@ -29,14 +29,14 @@ void trierCroissant(){
     float Tmp;
     for(i = 0; i < 10; i++){
         for(j = i + 1; j < 10; j++){
-            if(T[i] > T[j]){
-                Tmp = T[i];
-                T[i] = T[j];
-                T[j] = Tmp;}
+            if(liste_candidats[i] > liste_candidats[j]){
+                Tmp = liste_candidats[i];
+                liste_candidats[i] = liste_candidats[j];
+                liste_candidats[j] = Tmp;}
         }
     }
 
-    printf("\n les canditats par ordre croissant de vote sont :\n");
+    printf("\n les résultats par ordre croissant de vote sont :\n");
     afficherliste_candidats();
 }
 
@@ -69,4 +69,5 @@ void caution(){
     }
 
 }
+
 
