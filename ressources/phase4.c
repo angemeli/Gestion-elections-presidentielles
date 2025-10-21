@@ -4,8 +4,7 @@
 
 #include "ressources.h"
 
-float liste_candidats[10];
-int liste_electeurs, nb_candidat = 10, nb_votants;
+
 void remplirliste_candidats(){
     int i;
     printf("\nEntrer les valeurs du tableaux: \n");
@@ -70,3 +69,4 @@ void caution(){
     }
 
 }
+
