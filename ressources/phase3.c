@@ -11,7 +11,6 @@ void vote() {
         "\nPour s'abstenir du vote, appuyez sur entree\n"
         "\nAppuyez sur la touche entree pour continuer "
     );
-    scanf("");
 
     for (int i = 0; i < nb_electeurs; i++) {
         Electeur electeur = liste_electeurs[i];
@@ -55,7 +54,7 @@ void check_elector_vote() {
                 statut = 'A';
             }
             
-            printf("%s", statut);
+            printf("%s", &statut);
         }
     }
 
@@ -78,5 +77,4 @@ void count_votes() {
     }
 
     printf("Le decompte des votes s'est acheve avec succes. Appuyez sur entree pour continuer ");
-    scanf("");
 }
