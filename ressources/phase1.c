@@ -11,10 +11,10 @@ void enregCandidat() {
         perror("Erreur d'ouverture du fichier");
         return;
     }
-    printf("Entrez l'ID, le nom, l'âge et le parti du candidat :\n");
-        scanf("%d %s %d %s", &c.id, c.nom, &c.age, c.parti);
+    printf("Entrez l'ID, le nom, l'âge, le parti et la caution du candidat :\n");
+        scanf("%d %s %d %s %d", &c.id, c.nom, &c.age, c.parti, &c.caution);
     // écriture d'une ligne CSV
-    fprintf(f, "%d,%s,%d,%s\n", c.id, c.nom, c.age, c.parti);
+    fprintf(f, "%d,%s,%d,%s,%d\n", c.id, c.nom, c.age, c.parti, c.caution);
     fclose(f);
 }
 
