@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "ressources/ressources.h"
+#include "ressources.h"
 
 // Fonction principale
 int main(int argc, char const *argv[]) {
@@ -183,3 +183,4 @@ int main(int argc, char const *argv[]) {
 
     return 0;
 }
+
