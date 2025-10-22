@@ -4,10 +4,9 @@
 
 #include "ressources.h"
 
-// Vérifie si le parti est unique parmi les autres candidats
-int partiUnique(Candidat candidats[], int index, int total) {
+int partiUnique(Candidat candidat[], int index, int total) {
     for (int i = 0; i < total; i++) {
-        if (i != index && strcmp(candidats[i].parti, candidats[index].parti) == 0) {
+        if (i != index && strcmp(candidat[i].parti, candidat[index].parti) == 0) {
             return 0;
         }
     }
@@ -18,19 +17,19 @@ int partiUnique(Candidat candidats[], int index, int total) {
 
 void verifierCandidatures(Candidat candidat[], int n){
     for(int i = 0; i < n; i++){
-        if(candidats[i].age >= 35 && candidats[i].cautionPayee == 30000000 && partiUnique(candidats, i, n)){
-            candidats[i].estValide = 1;
+        if(candidat[i].age >= 35 && candidat[i].caution == 30000000 && partiUnique(candidat, i, n)){
+            candidat[i].estValide = 1;
         }else{
-            candidats[i].estValide = 0;
+            candidat[i].estValide = 0;
         }
     }
 }
 
-void afficherResultats(Candidat candidats[], int n) {
+void afficherResultats(Candidat candidat[], int n) {
     printf("\nRésultats de la vérification des candidatures :\n");
     printf("ID\tNom\t\tParti\t\tStatut\n");
     for (int i = 0; i < n; i++) {
-        printf("%d\t%-10s\t%-10s\t%s\n", candidats[i].id, candidats[i].nom, candidats[i].parti,
-               candidats[i].estValide ? "Acceptée" : "Rejetée");
+        printf("%d\t%-10s\t%-10s\t%s\n", candidat[i].id, candidat[i].nom, candidat[i].parti,
+               candidat[i].estValide ? "Acceptée" : "Rejetée");
     }
 }
