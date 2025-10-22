@@ -9,7 +9,6 @@ typedef struct{
     char parti[20];
     int nb_votes;
     int cautionPayee;
-    int dossierComplet;
     int estValide;
 } Candidat;
 
