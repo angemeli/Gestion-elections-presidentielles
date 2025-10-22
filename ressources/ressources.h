@@ -8,8 +8,10 @@ typedef struct{
     int age;
     char parti[20];
     int nb_votes;
-    int cautionPayee;
+    int caution;
     int estValide;
+    int voix;
+    int pourcentage;
 } Candidat;
 
 typedef struct{
@@ -47,3 +49,4 @@ void count_votes();
 #include "phase4.c"
 
 #endif
+
