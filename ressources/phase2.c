@@ -6,7 +6,7 @@
 
 void verifierCandidatures(Candidat candidat[], int n){
     for(int i = 0; i < n; i++){
-        if(candidats[i].age >= 35 && candidats[i].cautionPayee == 1 && candidats[i].dossierComplet == 1){
+        if(candidats[i].age >= 35 && candidats[i].cautionPayee == 30000000 && candidats[i].dossierComplet == 1){
             candidats[i].estValide = 1;
         }else{
             candidats[i].estValide = 0;
