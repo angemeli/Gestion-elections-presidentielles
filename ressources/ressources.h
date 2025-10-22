@@ -8,6 +8,9 @@ typedef struct{
     int age;
     char parti[20];
     int nb_votes;
+    int cautionPayee;
+    int dossierComplet;
+    int estValide;
 } Candidat;
 
 typedef struct{
