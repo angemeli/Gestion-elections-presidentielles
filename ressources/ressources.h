@@ -30,8 +30,8 @@ Electeur liste_electeurs[500];
 
 // Fonctions de la phase 1
 void load_data();
-void enregCandidat();
-void enregElecteur();
+void enregCandidat(Candidat c);
+void enregElecteur(Electeur e);
 
 // Fonctions de la phase 2
 

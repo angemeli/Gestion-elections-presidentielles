@@ -42,7 +42,7 @@ void pourcentage(){
         pourcentage += liste_candidats[i].voix;
     }
     nb_electeurs = (int)pourcentage;
-    for(i = 0; i < liste_candidats; i++){
+    for(i = 0; i < sizeof(liste_candidats); i++){
         liste_candidats[i].pourcentage = (liste_candidats[i].voix*100.0)/pourcentage;
     }
 }

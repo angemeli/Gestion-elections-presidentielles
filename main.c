@@ -7,6 +7,8 @@
 int main(int argc, char const *argv[]) {
     int choice = 1;
     int phase = 1;
+    Candidat c;
+    Electeur e;
 
     while (choice != 0) {
         switch (phase) {
@@ -28,11 +30,11 @@ int main(int argc, char const *argv[]) {
             switch (choice) {
             case 1 :
                 system("cls");
-                enregCandidat();
+                enregCandidat(c);
                 break;
             case 2 :
                 system("cls");
-                enregElecteur();
+                enregElecteur(e);
                 break;
             case 3 :
                 char entry;
