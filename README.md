@@ -15,12 +15,11 @@ Le programme parcourt chaque électeur, identifie son vote et l'attribue au cand
 - Une fonction permettant d'enregistrer les électeurs (Un électeur ne peut être enregistré qu'une seule fois)
 
 **Phase 2 : Evaluation des candidatures**
-- Une fonction qui évalue la validité de chaque candidature 
-- Une fonction qui affiche la liste des candidatures acceptées et celles rejettées
+- Une fonction qui évalue la validité de chaque candidature et affiche le résultat de l'évaluation
 
 **Phase 3 : Vote et comptabilisation**
 - Une fonction qui permet d'effectuer les votes
-- Une fonction qui affiche pour un candidat s'il a voté ou pas
+- Une fonction qui affiche pour un électeur s'il a voté ou pas
 - Une fonction qui comptabilise les votes pour chaque candidat
 
 **Phase 4 : Affichage des résultats**

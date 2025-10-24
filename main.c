@@ -10,6 +10,7 @@ int main(int argc, char const *argv[]) {
     Candidat c;
     Electeur e;
 
+    system("cls");
     while (choice != 0) {
         switch (phase) {
         // Phase 1 : Enregistrement des candidats et des electeurs
@@ -62,9 +63,8 @@ int main(int argc, char const *argv[]) {
             printf("\nPHASE 2 : EVALUATION DES CANDIDATURES\n");
             printf("\nChoisissez une action dans la liste suivante :\n");
             printf(
-                "\n1. Evaluer la validite des candidatures"
-                "\n2. Afficher la liste des candidatures acceptees et celles rejetees"
-                "\n3. Passer a la phase 3 (vote et comptabilisation)"
+                "\n1. Evaluer la validite des candidatures et afficher le resultat de l'evaluation"
+                "\n2. Passer a la phase 3 (vote et comptabilisation)"
                 "\n0. Quitter le programme"
                 "\n\nVotre choix : "
             );
@@ -74,13 +74,9 @@ int main(int argc, char const *argv[]) {
             switch (choice) {
             case 1 :
                 system("cls");
-                void verifierCandidatures();
+                verifierCandidatures(liste_candidats, nb_candidats);
                 break;
             case 2 :
-                system("cls");
-                void afficherResultats();
-                break;
-            case 3 :
                 char entry;
                 printf("\nContinuer vers la phase 3 (vote et comptabilisation) ? (o/n) Cette action est irreversible : ");
                 scanf(" %c", &entry);
@@ -106,9 +102,10 @@ int main(int argc, char const *argv[]) {
             printf("\nPHASE 3 : VOTE ET COMPTABILISATION\n");
             printf("\nChoisissez une action dans la liste suivante :\n");
             printf(
-                "\n1. Trouver pour un electeur s'il a vote ou pas"
-                "\n2. Comptabiliser les votes pour chaque candidat"
-                "\n3. Passer a la phase 4 (affichage des resultats)"
+                "\n1. Effectuer le vote"
+                "\n2. Dire pour un electeur s'il a vote ou pas"
+                "\n3. Comptabiliser les votes pour chaque candidat"
+                "\n4. Passer a la phase 4 (affichage des resultats)"
                 "\n0. Quitter le programme"
                 "\n\nVotre choix : "
             );
@@ -118,13 +115,17 @@ int main(int argc, char const *argv[]) {
             switch (choice) {
             case 1 :
                 system("cls");
-                // Fonction 1 de la phase 3
+                vote();
                 break;
             case 2 :
                 system("cls");
-                count_votes();
+                check_elector_vote();
                 break;
             case 3 :
+                system("cls");
+                count_votes();
+                break;
+            case 4 :
                 char entry;
                 printf("\nContinuer vers la phase 4 (affichage des resultats) ? (o/n) Cette action est irreversible : ");
                 scanf(" %c", &entry);

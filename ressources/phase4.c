@@ -4,57 +4,48 @@
 
 #include "ressources.h"
 
-
-
+void pourcentage(){
+    for (int i = 0; i < nb_candidats; i++) {
+        Candidat candidat = liste_candidats[i];
+        candidat.pourcentage = (double)candidat.nb_votes * 100  / (double)(nb_electeurs + nb_candidats);
+        liste_candidats[i] = candidat;
+    }
+}
 
 void afficherliste_candidats(){
-    void pourcentage();
+    pourcentage();
     int i;
-    printf("\nTableau des résultats :\n");
-    printf("ID\tNom\t\tParti\tVoix\tPourcentage\n");
     for (int i = 0; i < nb_candidats; i++) {
-        printf("%d\t%-10s\t%-5d\t%-10s\t%d\t%.2f%%\n", liste_candidats[i].id, liste_candidats[i].nom, liste_candidats[i].age, liste_candidats[i].parti, liste_candidats[i].nb_votes, liste_candidats[i].pourcentage);
+        Candidat c = liste_candidats[i];
+        printf("\n%d. %s (%s) : %.2f%% (%d voix)", i+1, c.nom, c.parti, c.pourcentage, c.nb_votes);
     }
- 
+    printf("\n");
 }
 
 void trierCroissant(){
-    int i, j, Tmp;
-    for(i = 0; i < 10; i++){
-        for(j = i + 1; j < 10; j++){
-            if(liste_candidats[i].voix > liste_candidats[j].voix){
-                Tmp = liste_candidats[i].voix;
-                liste_candidats[i].voix = liste_candidats[j].voix;
-                liste_candidats[j].voix = Tmp;}
+    int i, j; 
+    Candidat tmp;
+    for(i = 0; i < nb_candidats-1; i++){
+        for(j = i + 1; j < nb_candidats; j++){
+            if(liste_candidats[i].nb_votes < liste_candidats[j].nb_votes){
+                tmp = liste_candidats[i];
+                liste_candidats[i] = liste_candidats[j];
+                liste_candidats[j] = tmp;
+            }
         }
     }
 
-    printf("\n les résultats par ordre croissant de vote sont :\n");
+    printf("\n------- RESULTATS DE L'ELECTION PRESIDENTIELLE -------\n");
     afficherliste_candidats();
 }
 
-void pourcentage(){
-
-    int i;
-    float pourcentage;
-
-    for(i = 0; i < 10; i++){
-        pourcentage += liste_candidats[i].voix;
-    }
-    nb_electeurs = (int)pourcentage;
-    for(i = 0; i < sizeof(liste_candidats); i++){
-        liste_candidats[i].pourcentage = (liste_candidats[i].voix*100.0)/pourcentage;
-    }
-}
-
 void caution(){
-    printf("\n Voici les candidants dont la caution sera  rembourséé \n");
+    printf("\nVoici les candidants dont la caution sera  remboursee :");
     int i;
-    for(i = 0; i < nb_candidats; i++){
+    for(i = 1; i < nb_candidats; i++){
         if(liste_candidats[i].pourcentage >= 12.0){
-            printf("- %s (%d%%)\n", liste_candidats[i].nom, liste_candidats[i].pourcentage);
+            printf("\n- %s (%s) (%.2f%%)", liste_candidats[i].nom, liste_candidats[i].parti, liste_candidats[i].pourcentage);
         }
     }
-
+    printf("\n");
 }
-

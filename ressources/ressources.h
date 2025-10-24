@@ -10,8 +10,7 @@ typedef struct{
     int nb_votes;
     int caution;
     int estValide;
-    int voix;
-    int pourcentage;
+    double pourcentage;
 } Candidat;
 
 typedef struct{
@@ -29,18 +28,20 @@ Candidat liste_candidats[100];
 Electeur liste_electeurs[500];
 
 // Fonctions de la phase 1
-void load_data();
 void enregCandidat(Candidat c);
 void enregElecteur(Electeur e);
 
 // Fonctions de la phase 2
+void verifierCandidatures(Candidat candidat[], int n);
 
 // Fonctions de la phase 3
 void vote();
+void check_elector_vote();
 void count_votes();
 
 // Fonctions de la phase 4
-
+void trierCroissant();
+void caution();
 
 // Importation des fichiers
 #include "phase1.c"
