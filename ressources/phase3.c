@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
 
 #include "ressources.h"
 
@@ -10,7 +9,7 @@ int hide_input() {
     char ch;
 
     while (i < sizeof(input) - 1) {
-        ch = _getch();
+        ch = getchar();
         
         if (ch == 13) {
             break;
