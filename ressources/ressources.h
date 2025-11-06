@@ -8,7 +8,7 @@ typedef struct{
     int age;
     char parti[20];
     int nb_votes;
-    int caution;
+    double caution;
     int estValide;
     double pourcentage;
 } Candidat;
