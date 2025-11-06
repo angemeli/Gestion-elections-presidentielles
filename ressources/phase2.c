@@ -4,10 +4,28 @@
 
 #include "ressources.h"
 
+int verifeirFichier(const char *nomFichier) {
+    FILE *f = fopen(nomFichier, "r");
+    if (f == NULL) {
+        // Si le fichier n'existe pas encore, on considère qu'il y a 0 lignes
+        return 0;
+    }
+    Candidat liste[100];
+    while (fscanf(f, "%s %d %s %lf", 
+              liste_candidats -> nom, 
+              &liste_candidats -> age,
+              liste_candidats -> parti,
+              &liste_candidats -> caution) == 3) {
+    nb_candidats++;
+    }
+    fclose(f);
+}
+    
+
+
 // Vérifie si le parti est unique parmi les autres candidats
-int partiUnique() {
-    int index, total;
-    for (int i = 0; i < total; i++) {
+int partiUnique(int index) {
+    for (int i = 0; i < nb_candidats; i++) {
         if (i != index && strcmp(liste_candidats[i].parti, liste_candidats[index].parti) == 0) {
             return 0;
         }
@@ -18,12 +36,15 @@ int partiUnique() {
 
 
 void verifierCandidatures(){
-    int n;
-    for(int i = 0; i < n; i++){
-        if(liste_candidats[i].age >= 35 && liste_candidats[i].caution == 30000000 && partiUnique()){
+    for(int i = 0; i < nb_candidats; i++){
+        if(liste_candidats[i].age >= 35 && liste_candidats[i].caution == 30000000 && partiUnique(i)){
             liste_candidats[i].estValide = 1;
-        }else{
+        }else if(liste_candidats[i].caution != 30000000){
             liste_candidats[i].estValide = 0;
+            strcpy(liste_candidats[i].motifRejet, "Caution différente de 30000000");
+        } else if(liste_candidats[i].age < 35){
+            liste_candidats[i].estValide = 0;
+            strcpy(liste_candidats[i].motifRejet, "Âge inférieur à 35 ans");
         }
     }
     printf("Evaluation términée.");
