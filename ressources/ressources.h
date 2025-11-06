@@ -11,6 +11,7 @@ typedef struct{
     double caution;
     int estValide;
     double pourcentage;
+    char motifRejet[100];
 } Candidat;
 
 typedef struct{
