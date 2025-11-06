@@ -10,11 +10,14 @@ int main(int argc, char const *argv[]) {
     Candidat c;
     Electeur e;
 
+    load_data();
     system("cls");
     while (choice != 0) {
         switch (phase) {
         // Phase 1 : Enregistrement des candidats et des electeurs
         case 1 :
+            printf("\n----------------------------------------------------------------\n");
+            printf("------- SYSTEME DE GESTION DES ELECTIONS PRESIDENTIELLES -------");
             printf("\n----------------------------------------------------------------\n");
             printf("\nPHASE 1 : ENREGISTREMENT DES CANDIDATS ET DES ELECTEURS\n");
             printf("\nChoisissez une action dans la liste suivante :\n");
@@ -25,7 +28,7 @@ int main(int argc, char const *argv[]) {
                 "\n0. Quitter le programme"
                 "\n\nVotre choix : "
             );
-            scanf("%d", &choice);
+            get_int("", &choice);
 
             // Choisir une action pour la phase 1
             switch (choice) {
@@ -60,6 +63,8 @@ int main(int argc, char const *argv[]) {
         // Phase 2 : Evaluation des candidatures
         case 2 :
             printf("\n----------------------------------------------------------------\n");
+            printf("------- SYSTEME DE GESTION DES ELECTIONS PRESIDENTIELLES -------");
+            printf("\n----------------------------------------------------------------\n");
             printf("\nPHASE 2 : EVALUATION DES CANDIDATURES\n");
             printf("\nChoisissez une action dans la liste suivante :\n");
             printf(
@@ -68,13 +73,14 @@ int main(int argc, char const *argv[]) {
                 "\n0. Quitter le programme"
                 "\n\nVotre choix : "
             );
-            scanf("%d", &choice);
+            get_int("", &choice);
 
             // Choisir une action pour la phase 2
             switch (choice) {
             case 1 :
                 system("cls");
                 verifierCandidatures(liste_candidats, nb_candidats);
+                retourner_liste_valide();
                 break;
             case 2 :
                 char entry;
@@ -99,6 +105,8 @@ int main(int argc, char const *argv[]) {
         // Phase 3 : Vote et comptabilisation
         case 3 :
             printf("\n----------------------------------------------------------------\n");
+            printf("------- SYSTEME DE GESTION DES ELECTIONS PRESIDENTIELLES -------");
+            printf("\n----------------------------------------------------------------\n");
             printf("\nPHASE 3 : VOTE ET COMPTABILISATION\n");
             printf("\nChoisissez une action dans la liste suivante :\n");
             printf(
@@ -109,13 +117,13 @@ int main(int argc, char const *argv[]) {
                 "\n0. Quitter le programme"
                 "\n\nVotre choix : "
             );
-            scanf("%d", &choice);
+            get_int("", &choice);
 
             // Choisir une action pour la phase 3
             switch (choice) {
             case 1 :
                 system("cls");
-                vote();
+                vote(*liste_candidats_valides);
                 break;
             case 2 :
                 system("cls");
@@ -123,7 +131,7 @@ int main(int argc, char const *argv[]) {
                 break;
             case 3 :
                 system("cls");
-                count_votes();
+                count_votes(*liste_candidats_valides);
                 break;
             case 4 :
                 char entry;
@@ -148,6 +156,8 @@ int main(int argc, char const *argv[]) {
         // Phase 4 : Affichage des résultats
         case 4 :
             printf("\n----------------------------------------------------------------\n");
+            printf("------- SYSTEME DE GESTION DES ELECTIONS PRESIDENTIELLES -------");
+            printf("\n----------------------------------------------------------------\n");
             printf("\nPHASE 4 : AFFICHAGE DES RESULTATS\n");
             printf("\nChoisissez une action dans la liste suivante :\n");
             printf(
@@ -156,17 +166,17 @@ int main(int argc, char const *argv[]) {
                 "\n0. Quitter le programme"
                 "\n\nVotre choix : "
             );
-            scanf("%d", &choice);
+            get_int("", &choice);
 
             // Choisir une action pour la phase 4
             switch (choice) {
             case 1 :
                 system("cls");
-                trierCroissant();
+                trierCroissant(*liste_candidats_valides);
                 break;
             case 2 :
                 system("cls");
-                caution();
+                caution(*liste_candidats_valides);
                 break;
             case 0 :
                 printf("\nMerci et a la prochaine !\n");
@@ -186,4 +196,3 @@ int main(int argc, char const *argv[]) {
 
     return 0;
 }
-

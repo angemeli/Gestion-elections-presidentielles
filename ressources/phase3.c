@@ -1,23 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
 
 #include "ressources.h"
 
-int hide_input() {
-    char input[100];
+void hide_input(char *input) {
     int i = 0;
     char ch;
 
     while (i < sizeof(input) - 1) {
-        ch = getchar();
+        ch = _getch();
         
-        if (ch == 13) {
+        if (ch == 13 || ch == 10) {
             break;
         }
-        else if (ch == 8) {
+        else if (ch == 8 || ch == 127) {
             if (i > 0) {
                 i--;
-                printf("\b\b"); //Effacer le dernier caractère affiché
+                printf("\b \b"); //Effacer le dernier caractère affiché
             }
         }
         else {
@@ -26,11 +26,10 @@ int hide_input() {
         }
     }
 
-    input[i] = '\0'; //Terminer la chaîne
-    return atoi(input);
+    input[i] = '\0';
 }
 
-void vote() {
+void vote(Candidat *liste_candidats) {
     for (int i = 0; i < nb_electeurs; i++) {
         Electeur electeur = liste_electeurs[i];
 
@@ -42,7 +41,7 @@ void vote() {
         );
 
         printf("\n--- Liste des candidats ---");
-        for (int j = 0; j < nb_candidats; j++) {
+        for (int j = 0; j < nb_candidats_valides; j++) {
             Candidat candidat = liste_candidats[j];
             printf("\n%d. %s (%s)", candidat.id, candidat.nom, candidat.parti);
         }
@@ -54,38 +53,57 @@ void vote() {
             "\nChoix de l'electeur : ",
             electeur.id, electeur.nom, electeur.age, electeur.quartier
         );
-        electeur.vote = hide_input();
+        
+        char input[100];
+        hide_input(input); 
+
+        if (strcmp(input, "") == 0) {
+            electeur.estAbstenu = 1;
+            electeur.vote = 0;
+            nb_abstenus += 1;
+        }
+        else {
+            electeur.estAbstenu = 0;
+            electeur.vote = atoi(input);
+            nb_votants += 1;
+
+            if (electeur.vote == 0) {
+                nb_bulletins_nuls += 1;
+            }
+        }
+
         liste_electeurs[i] = electeur;
     }
 
-    printf("\n\nLes votes sont termines");
     system("cls");
+    printf("\nLes votes sont termines\n");
 }
 
 void check_elector_vote() {
     int id;
     printf("\nEntrez l'id de l'electeur a verifier : ");
-    scanf("%d", &id);
+    get_int("", &id);
 
     for (int i = 0; i < nb_electeurs; i++) {
         Electeur electeur = liste_electeurs[i];
         if (electeur.id == id) {
             printf("\nStatut de l'electeur de id %d, nomme %s : ", id, electeur.nom);
-            char statut;
-            if (electeur.vote != 0) {
-                statut = 'V';
+            char statut[10];
+            if (electeur.estAbstenu == 0) {
+                strcpy(statut, "Vote");
             }
             else {
-                statut = 'A';
+                strcpy(statut, "Abstenu");
             }
             
-            printf("%c", statut);
+            printf("%s", statut);
         }
     }
+    printf("\n");
 }
 
-void count_votes() {
-    for (int i = 0; i < nb_candidats; i++) {
+void count_votes(Candidat *liste_candidats) {
+    for (int i = 0; i < nb_candidats_valides; i++) {
         Candidat candidat = liste_candidats[i];
         candidat.nb_votes = 0;
         for (int j = 0; j < nb_electeurs; j++) {

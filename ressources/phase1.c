@@ -5,6 +5,36 @@
 
 #include "ressources.h" // contient les typedefs Candidat, Electeur, et les listes externes
 
+void load_data() { // Fonction pour charger les données depuis les fichiers
+    // Fichier des candidats
+    FILE *f = fopen("candidats.csv", "r");
+    if (f == NULL) {
+        perror("Erreur lors de l'ouverture du fichier des candidats pour le chargement des donnees");
+        return;
+    }
+
+    Candidat c;
+    while (fscanf(f, "%d,%49[^,],%d,%49[^,],%d\n", &c.id, c.nom, &c.age, c.parti, &c.caution) == 5) {
+        liste_candidats[nb_candidats] = c;
+        nb_candidats += 1;
+    }
+    fclose(f);
+    
+    // Fichier des électeurs
+    f = fopen("electeurs.csv", "r");
+    if (f == NULL) {
+        perror("Erreur lors de l'ouverture du fichier des electeurs pour le chargement des donnees");
+        return;
+    }
+
+    Electeur e;
+    while (fscanf(f, "%d,%49[^,],%d,%49[^\n]\n", &e.id, e.nom, &e.age, e.quartier) == 4) {
+        liste_electeurs[nb_electeurs] = e;
+        nb_electeurs += 1;
+    }
+    fclose(f);
+}
+
 // Fonction pour compter le nombre de lignes dans le fichier .csv
 int compterLignes(const char *nomFichier) {
     FILE *f = fopen(nomFichier, "r");
@@ -52,45 +82,23 @@ void nettoyerChaine(char *s) {
 }
 
 // Fonction générique pour vérifier si un candidat ou un électeur existe déjà
-int existeDeja(const char *nomFichier, const char *nom, const char *autreChamp) {
-    FILE *f = fopen(nomFichier, "r");
-    if (f == NULL) {
-        // Si le fichier n'existe pas encore, personne n'est enregistré
-        return 0;
-    }
-
-    char ligne[500];
-    char nomLu[100], champLu[100];
-    int id, age;
-    double valSupp; // pour lire un champ supplémentaire (caution ou autre) -- double pour caution
-
-    while (fgets(ligne, sizeof(ligne), f)) {
-        // Si c’est le fichier des candidats (5 champs : id,nom,age,parti,caution)
-        if (strstr(nomFichier, "candidat") != NULL) {
-            if (sscanf(ligne, "%d,%99[^,],%d,%99[^,],%lf", &id, nomLu, &age, champLu, &valSupp) == 5) {
-                nettoyerChaine(nomLu);
-                nettoyerChaine(champLu);
-                // compare avec les valeurs passées (nom et autreChamp)
-                if (strcmp(nomLu, nom) == 0 && strcmp(champLu, autreChamp) == 0) {
-                    fclose(f);
-                    return 1; // doublon trouvé
-                }
-            }
-        }
-        // Si c’est le fichier des électeurs (4 champs : id,nom,age,quartier)
-        else if (strstr(nomFichier, "electeurs") != NULL) {
-            if (sscanf(ligne, "%d,%99[^,],%d,%99[^,]", &id, nomLu, &age, champLu) == 4) {
-                nettoyerChaine(nomLu);
-                nettoyerChaine(champLu);
-                if (strcmp(nomLu, nom) == 0 && strcmp(champLu, autreChamp) == 0) {
-                    fclose(f);
-                    return 1; // doublon trouvé
-                }
+int existeDeja(const char *nomFichier, const char *nom, const int age, const char *autreChamp) {
+    if (nomFichier == "candidats.csv") {
+        for (int i = 0; i < nb_candidats; i++) {
+            if (nom == liste_candidats[i].nom && age == liste_candidats[i].age && autreChamp == liste_candidats[i].parti) {
+                return 1; // Doublon trouvé
             }
         }
     }
 
-    fclose(f);
+    else if (nomFichier == "electeurs.csv") {
+        for (int i = 0; i < nb_electeurs; i++) {
+            if (nom == liste_electeurs[i].nom && age == liste_electeurs[i].age && autreChamp == liste_electeurs[i].quartier) {
+                return 1; // Doublon trouvé
+            }
+        }
+    }
+    
     return 0; // aucun doublon trouvé
 }
 
@@ -101,55 +109,37 @@ void enregCandidat(Candidat c) {
         return;
     }
 
-    printf("Entrez le nom du candidat :\n");
-    // vider le buffer au cas où il resterait un \n après une lecture précédente
-    viderBuffer();
-    lireLigne(c.nom, sizeof(c.nom));
+    printf("Entrez les informations sur le nouveau candidat\n");
+    get_string("\nNom : ", c.nom, sizeof(c.nom));
+    get_int("Age : ", &c.age);
+    get_string("Parti politique : ", c.parti, sizeof(c.parti));
+    get_int("Montant de la caution : ", &c.caution);
 
-    printf("Entrez l'âge du candidat :\n");
-    // lecture numérique : scanf puis vider le \n restant
-    if (scanf("%d", &c.age) != 1) {
-        printf("Valeur d'age invalide.\n");
-        fclose(f);
-        viderBuffer();
-        return;
-    }
-    viderBuffer();
-
-    printf("Entrez le parti du candidat :\n");
-    lireLigne(c.parti, sizeof(c.parti));
-
-    printf("Entrez le montant de la caution payée par le candidat :\n");
-    if (scanf("%lf", &c.caution) != 1) {
-        printf("Valeur de caution invalide.\n");
-        fclose(f);
-        viderBuffer();
-        return;
-    }
-    viderBuffer();
+    /* viderBuffer();
 
     // Nettoyage des champs (au cas où)
     nettoyerChaine(c.nom);
-    nettoyerChaine(c.parti);
+    nettoyerChaine(c.parti); */
 
-    if (existeDeja("candidats.csv", c.nom, c.parti)) {
-        printf("\n⚠️  Ce candidat est déjà enregistré.\n");
+    // Vérifie si ce candidat existe déjà (même nom, même âge et même parti)
+    if (existeDeja("candidats.csv", c.nom, c.age, c.parti)) {
+        printf("\n⚠️  Ce candidat est deja enregistre.\n");
         fclose(f);
         return;
     }
 
-    int id_c = compterLignes("candidats.csv") + 1;
-    c.id = id_c;
+    // Attribution automatique d'un id au canddat
+    c.id = nb_candidats + 1;
 
-    // Ajout en mémoire (liste_candidats et nb_candidats doivent être définis dans ressources.h)
+    // Ajout du candidat dans la liste en mémoire
     liste_candidats[nb_candidats] = c;
-    nb_candidats++;
+    nb_candidats += 1;
 
     // Écriture dans le fichier CSV
-    fprintf(f, "%d,%s,%d,%s,%.2f\n", c.id, c.nom, c.age, c.parti, c.caution);
+    fprintf(f, "%d,%s,%d,%s,%d\n", c.id, c.nom, c.age, c.parti, c.caution);
     fclose(f);
 
-    printf("\nLe candidat a été enregistré avec succès ! (ID : %d)\n", c.id);
+    printf("\nLe candidat a ete enregistre avec succes ! (ID : %d)\n", c.id);
 }
 
 
@@ -161,36 +151,25 @@ void enregElecteur(Electeur e) {
         return;
     }
 
-    printf("Entrez le nom de l'électeur :\n");
-    viderBuffer();
-    lireLigne(e.nom, sizeof(e.nom));
-
-    printf("Entrez l'âge de l'électeur :\n");
-    if (scanf("%d", &e.age) != 1) {
-        printf("Valeur d'age invalide.\n");
-        fclose(f);
-        viderBuffer();
-        return;
-    }
-    viderBuffer();
-
-    printf("Entrez le quartier de l'électeur :\n");
-    lireLigne(e.quartier, sizeof(e.quartier));
-
+    printf("Entrez les informations sur le nouvel electeur\n");
+    get_string("\nNom : ", e.nom, sizeof(e.nom));
+    get_int("Age : ", &e.age);
+    get_string("Quartier de residence : ", e.quartier, sizeof(e.quartier));
+    
+    /* viderBuffer();
     // Nettoyage des champs (au cas où)
     nettoyerChaine(e.nom);
-    nettoyerChaine(e.quartier);
+    nettoyerChaine(e.quartier); */
 
     if (e.age >= 21) {
         // Vérifie si l’électeur existe déjà (même nom et même quartier)
-        if (existeDeja("electeurs.csv", e.nom, e.quartier)) {
+        if (existeDeja("electeurs.csv", e.nom, e.age, e.quartier)) {
             printf("\n⚠️  Cet électeur est déjà enregistré.\n");
             fclose(f);
             return;
         }
-        // Calcul de l'ID selon le nombre de lignes déjà enregistrées
-        int id_e = compterLignes("electeurs.csv") + 1;
-        e.id = id_e;
+        // Attribution automatique d'un id a l'electeur
+        e.id = nb_electeurs + 1;
 
         // Ajout de l'électeur à la liste en mémoire
         liste_electeurs[nb_electeurs] = e;
@@ -200,9 +179,9 @@ void enregElecteur(Electeur e) {
         fprintf(f, "%d,%s,%d,%s\n", e.id, e.nom, e.age, e.quartier);
         fclose(f);
 
-        printf("\nL'électeur a été enregistré avec succès ! (ID : %d)\n", e.id);
+        printf("\nL'electeur a ete enregistre avec succes ! (ID : %d)\n", e.id);
     } else {
-        printf("\nL'électeur n'est pas en âge de voter !\n");
+        printf("\nL'electeur n'est pas en age de voter !\n");
         fclose(f);
     }
 }

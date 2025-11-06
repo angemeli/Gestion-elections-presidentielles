@@ -1,6 +1,10 @@
 #ifndef _ce_mot_est_unique_dans_tout_le_programme_
 #define  _ce_mot_est_unique_dans_tout_le_programme_
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 // Structures globales
 typedef struct{
     int id;
@@ -8,10 +12,10 @@ typedef struct{
     int age;
     char parti[20];
     int nb_votes;
-    double caution;
+    int caution;
     int estValide;
     double pourcentage;
-    char motifRejet[100];
+    char motifRejet[500];
 } Candidat;
 
 typedef struct{
@@ -20,20 +24,46 @@ typedef struct{
     int age;
     char quartier[20];
     int vote;
+    int estAbstenu;
 } Electeur;
 
 // Variables globales
 int nb_candidats = 0;
+int nb_candidats_valides = 0;
 int nb_electeurs = 0;
-Candidat liste_candidats[100];
-Electeur liste_electeurs[500];
+int nb_bulletins_nuls = 0;
+int nb_votants = 0;
+int nb_abstenus = 0;
+Candidat liste_candidats[500];
+Candidat *liste_candidats_valides[500];
+Electeur liste_electeurs[1000];
+
+// Fonctions accessoires
+int get_int(char *message, int *variable) { // Fonction qui facilite la saisie des entiers avec gestion d'erreurs
+    char input[500];
+    printf("%s", message);
+    fgets(input, sizeof(input), stdin);
+
+    while (sscanf(input, "%d", variable) != 1) {
+        printf("Entree invalide. Reessayez : ");
+        fgets(input, sizeof(input), stdin);
+    }
+}
+
+void get_string(char *message, char *variabe, int taille) { // Foction qui facilite la saisie des chaines de caractères
+    printf("%s", message);
+    fgets(variabe, taille, stdin);
+    strtok(variabe, "\n");
+}
 
 // Fonctions de la phase 1
+void load_data();
 void enregCandidat(Candidat c);
 void enregElecteur(Electeur e);
 
 // Fonctions de la phase 2
-void verifierCandidatures();
+void verifierCandidatures(Candidat candidat[], int n);
+void retourner_liste_valide();
 
 // Fonctions de la phase 3
 void vote();
