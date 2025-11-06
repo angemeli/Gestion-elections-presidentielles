@@ -32,7 +32,7 @@ void enregCandidat(Candidat c);
 void enregElecteur(Electeur e);
 
 // Fonctions de la phase 2
-void verifierCandidatures(Candidat candidat[], int n);
+void verifierCandidatures();
 
 // Fonctions de la phase 3
 void vote();
