@@ -66,13 +66,13 @@ void verifierCandidatures(Candidat candidat[], int n);
 void retourner_liste_valide();
 
 // Fonctions de la phase 3
-void vote();
+void vote(Candidat *liste_candidats);
 void check_elector_vote();
-void count_votes();
+void count_votes(Candidat *liste_candidats);
 
 // Fonctions de la phase 4
-void trierCroissant();
-void caution();
+void trierCroissant(Candidat *liste_candidats);
+void caution(Candidat *liste_candidats);
 
 // Importation des fichiers
 #include "phase1.c"

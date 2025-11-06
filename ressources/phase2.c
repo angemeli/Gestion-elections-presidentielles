@@ -19,6 +19,10 @@ void afficherResultats(Candidat candidat[], int n) {
         Candidat c = candidat[i];
         printf("\n%d. %s (%s) : %s", c.id, c.nom, c.parti,
             c.estValide == 1 ? "Acceptee" : "Rejetee");
+        if (c.estValide == 0) {
+            printf(" (%s)", c.motifRejet);
+        }
+        
     }
     printf("\n");
 }
@@ -26,9 +30,24 @@ void afficherResultats(Candidat candidat[], int n) {
 void verifierCandidatures(Candidat candidat[], int n) {
     for(int i = 0; i < n; i++) {
         candidat[i].estValide = 0;
-        if(candidat[i].age >= 35 && candidat[i].caution == 30000000 && partiUnique(candidat, i, n)) {
+
+        if (candidat[i].age < 35) {
+            candidat[i].estValide = 0;
+            strcpy(candidat[i].motifRejet, "Age inferieur a l'age minimum requis");
+        }
+        else if (candidat[i].caution != 30000000) {
+            candidat[i].estValide = 0;
+            strcpy(candidat[i].motifRejet, "Montant de la caution non respecte");
+        }
+        else if (partiUnique(candidat, i, n) == 0) {
+            candidat[i].estValide = 0;
+            strcpy(candidat[i].motifRejet, "Pluralite de candudatures pour le meme parti");
+        }
+
+        else {
             candidat[i].estValide = 1;
         }
+        
     }
     afficherResultats(candidat, n);
 }

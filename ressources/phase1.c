@@ -35,57 +35,11 @@ void load_data() { // Fonction pour charger les données depuis les fichiers
     fclose(f);
 }
 
-// Fonction pour compter le nombre de lignes dans le fichier .csv
-int compterLignes(const char *nomFichier) {
-    FILE *f = fopen(nomFichier, "r");
-    if (f == NULL) {
-        // Si le fichier n'existe pas encore, on considère qu'il y a 0 lignes
-        return 0;
-    }
-
-    int count = 0;
-    char ligne[500];
-    while (fgets(ligne, sizeof(ligne), f)) {
-        // Ignore les lignes vides
-        if (ligne[0] != '\n' && ligne[0] != '\0')
-            count++;
-    }
-
-    fclose(f);
-    return count;
-}
-
-// Vide le buffer stdin jusqu'au prochain \n (utile après scanf)
-void viderBuffer(void) {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF) { }
-}
-
-// Lit une ligne depuis stdin dans dest (taille size) et enlève le \n final
-void lireLigne(char *dest, size_t size) {
-    if (fgets(dest, (int)size, stdin) == NULL) {
-        // Si fgets échoue, on met une chaîne vide
-        dest[0] = '\0';
-        return;
-    }
-    // supprime le \n final s'il existe
-    dest[strcspn(dest, "\n")] = '\0';
-}
-
-// Supprime \n, \r et espaces de fin d'une chaîne (utile pour nettoyer les données lues depuis le fichier)
-void nettoyerChaine(char *s) {
-    int i = (int)strlen(s) - 1;
-    while (i >= 0 && (s[i] == '\n' || s[i] == '\r' || s[i] == ' ' || s[i] == '\t')) {
-        s[i] = '\0';
-        i--;
-    }
-}
-
 // Fonction générique pour vérifier si un candidat ou un électeur existe déjà
 int existeDeja(const char *nomFichier, const char *nom, const int age, const char *autreChamp) {
     if (nomFichier == "candidats.csv") {
         for (int i = 0; i < nb_candidats; i++) {
-            if (nom == liste_candidats[i].nom && age == liste_candidats[i].age && autreChamp == liste_candidats[i].parti) {
+            if ((strcmp(nom, liste_candidats[i].nom) == 0) && (age == liste_candidats[i].age) && (strcmp(autreChamp, liste_candidats[i].parti) == 0)) {
                 return 1; // Doublon trouvé
             }
         }
@@ -93,7 +47,7 @@ int existeDeja(const char *nomFichier, const char *nom, const int age, const cha
 
     else if (nomFichier == "electeurs.csv") {
         for (int i = 0; i < nb_electeurs; i++) {
-            if (nom == liste_electeurs[i].nom && age == liste_electeurs[i].age && autreChamp == liste_electeurs[i].quartier) {
+            if ((strcmp(nom, liste_electeurs[i].nom) == 0) && age == liste_electeurs[i].age && (strcmp(autreChamp, liste_electeurs[i].quartier) == 0)) {
                 return 1; // Doublon trouvé
             }
         }
