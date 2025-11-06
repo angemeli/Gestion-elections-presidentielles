@@ -70,7 +70,7 @@ void enregCandidat(Candidat c) {
     }
 
     printf("Entrez le nom, l'age, le parti et le montant de la caution payee par le candidat :\n");
-    scanf("%s %d %s %d", c.nom, &c.age, c.parti, &c.caution);
+    scanf("%s %d %s %lf", c.nom, &c.age, c.parti, &c.caution);
 
     // Vérifie si ce candidat existe déjà (même nom et même parti)
     if (existeDeja("candidats.csv", c.nom, c.parti)) {
@@ -88,7 +88,7 @@ void enregCandidat(Candidat c) {
     nb_candidats += 1;
 
     // Écriture dans le fichier CSV
-    fprintf(f, "%d,%s,%d,%s,%d\n", c.id, c.nom, c.age, c.parti, c.caution);
+    fprintf(f, "%d,%s,%d,%s,%lf\n", c.id, c.nom, c.age, c.parti, c.caution);
     fclose(f);
 
     printf("\nLe candidat a ete enregistre avec succes ! (ID : %d)\n", c.id);
